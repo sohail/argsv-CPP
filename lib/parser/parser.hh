@@ -4,20 +4,62 @@
  */
 #include "../csv/src/parser.hh"
 
+#ifndef		CC_TOKENIZER_ARGSV_CPP_PARSER_HH
+#define		CC_TOKENIZER_ARGSV_CPP_PARSER_HH
+
+struct arg
+{
+    int i; // argv start index
+    int j; // argv end index    
+    struct arg* previous; // link to list
+    struct arg* next; // link to list
+    cc_tokenizer::string_character_traits<char>::int_type ln; // line number 
+    cc_tokenizer::string_character_traits<char>::int_type tn; // token number    
+};
+
 #define TRAVERSE_ARGV(a, n)  for (int i = 1; i < n; i++)\
                              {\
                                  std::cout<<a[i]<<std::endl;\
                              }\
 
-#define FIND_ARG(a, n, p, b)    while (p.go_to_next_line() != cc_tokenizer::string_character_traits<char>::eof())\
-                                {\
-                                    while (p.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())\
+#define FIND_ARG(a, n, p, b)   {\
+                                    bool found = false;\
+                                    p.reset(LINES);\
+                                    p.reset(TOKENS);\
+                                    while (p.go_to_next_line() != cc_tokenizer::string_character_traits<char>::eof())\
                                     {\
-                                        if (p.get_current_token().compare(b) == 0)\
+                                        while (p.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())\
                                         {\
-                                            std::cout<<p.get_current_line().c_str()<<std::endl;\
+                                            if (p.get_current_token().compare(b) == 0)\
+                                            {\
+                                                found = true;\
+                                                break;\
+                                            }\
+                                        }\
+                                        if (found)\
+                                        {\
                                             break;\
+                                        }\
+                                    }\
+                                    if (!found)\
+                                    {\
+                                    }\
+                                    else\
+                                    {\
+                                        found = false;\
+                                        p.reset(TOKENS);\
+                                        while(p.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())\
+                                        {\
+                                            for (int i = 1; i < n; i++)\
+                                            {\
+                                                if (p.get_current_token().compare(a[i]) == 0)\
+                                                {\
+                                                    found = true;\
+                                                    std::cout<<a[i]<<std::endl;\
+                                                }\
+                                            }\
                                         }\
                                     }\
                                 }\
 
+#endif

@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
      */
 
     //TRAVERSE_ARGV(argv, argc)
-    FIND_ARG(argv, argc, parser, "version")
+    FIND_ARG(argv, argc, parser, "d")
      
     return 0;
 }
