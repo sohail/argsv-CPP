@@ -29,7 +29,12 @@ int main(int argc, char* argv[])
 
     if (arg.i)
     {
-        std::cout<<"--> "<<argv[arg.i]<<std::endl;
+        ARG* ptr = &arg;
+        while (ptr->next != NULL)
+        {
+            std::cout<<"--> "<<argv[ptr->i]<<std::endl;
+            ptr = ptr->next;
+        }
     }
                  
     return 0;

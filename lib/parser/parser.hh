@@ -24,8 +24,10 @@ typedef struct arg
                              }\
 
 #define FIND_ARG(a, n, p, b, r)   {\
+                                    cc_tokenizer::allocator<char> alloc_obj;\
                                     bool found = false;\
-                                    r = {0, NULL, NULL, 0, 0};\
+                                    ARG* ptr = &r;\
+                                    *ptr = {0, 0, NULL, NULL, 0, 0};\
                                     p.reset(LINES);\
                                     p.reset(TOKENS);\
                                     while (p.go_to_next_line() != cc_tokenizer::string_character_traits<char>::eof())\
@@ -34,8 +36,8 @@ typedef struct arg
                                         {\
                                             if (p.get_current_token().compare(b) == 0)\
                                             {\
-                                                r.ln = p.get_current_line_number();\
-                                                r.tn = p.get_current_token_number();\
+                                                ptr->ln = p.get_current_line_number();\
+                                                ptr->tn = p.get_current_token_number();\
                                                 found = true;\
                                                 break;\
                                             }\
@@ -58,9 +60,10 @@ typedef struct arg
                                             {\
                                                 if (p.get_current_token().compare(a[i]) == 0)\
                                                 {\
-                                                    r.i = i;\
-                                                    found = true;\
-                                                    /*std::cout<<a[i]<<std::endl;*/\
+                                                    ptr->i = i;\
+                                                    ptr->next = (ARG*)alloc_obj.allocate(sizeof(ARG));\
+                                                    *(ptr->next) = {0, 0, ptr, NULL, 0, 0};\
+                                                    ptr = ptr->next;\
                                                 }\
                                             }\
                                         }\
