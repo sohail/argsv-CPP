@@ -9,7 +9,8 @@
 #define COMMAND "d,-d,dir,--dir,(displays a list of files and subdirectories in a directory)\nh,-h,help,--help,?,/?,(displays help screen)\nv,-v,version,--version,(displays version number)"
 
 int main(int argc, char* argv[])
-{          
+{     
+    ARG arg;     
     cc_tokenizer::csv_parser<cc_tokenizer::String<char>, char> parser(cc_tokenizer::String<char>(COMMAND));
 
     /*
@@ -24,7 +25,7 @@ int main(int argc, char* argv[])
      */
 
     //TRAVERSE_ARGV(argv, argc)
-    FIND_ARG(argv, argc, parser, "d")
+    FIND_ARG(argv, argc, parser, "d", arg)
      
     return 0;
 }

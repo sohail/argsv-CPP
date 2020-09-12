@@ -7,7 +7,7 @@
 #ifndef		CC_TOKENIZER_ARGSV_CPP_PARSER_HH
 #define		CC_TOKENIZER_ARGSV_CPP_PARSER_HH
 
-struct arg
+typedef struct arg
 {
     int i; // argv start index
     int j; // argv end index    
@@ -15,15 +15,16 @@ struct arg
     struct arg* next; // link to list
     cc_tokenizer::string_character_traits<char>::int_type ln; // line number 
     cc_tokenizer::string_character_traits<char>::int_type tn; // token number    
-};
+}ARG;
 
 #define TRAVERSE_ARGV(a, n)  for (int i = 1; i < n; i++)\
                              {\
                                  std::cout<<a[i]<<std::endl;\
                              }\
 
-#define FIND_ARG(a, n, p, b)   {\
+#define FIND_ARG(a, n, p, b, r)   {\
                                     bool found = false;\
+                                    r = {0, NULL, NULL, 0, 0};\
                                     p.reset(LINES);\
                                     p.reset(TOKENS);\
                                     while (p.go_to_next_line() != cc_tokenizer::string_character_traits<char>::eof())\
