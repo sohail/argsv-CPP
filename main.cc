@@ -26,6 +26,11 @@ int main(int argc, char* argv[])
 
     //TRAVERSE_ARGV(argv, argc)
     FIND_ARG(argv, argc, parser, "d", arg)
-     
+
+    if (arg.i)
+    {
+        std::cout<<"--> "<<argv[arg.i]<<std::endl;
+    }
+                 
     return 0;
 }

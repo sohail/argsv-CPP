@@ -2,6 +2,7 @@
     lib/parser/parser.hh
     Written by, Sohail Qayum Malik soni@sharingeconomy.pk
  */
+
 #include "../csv/src/parser.hh"
 
 #ifndef		CC_TOKENIZER_ARGSV_CPP_PARSER_HH
@@ -33,6 +34,8 @@ typedef struct arg
                                         {\
                                             if (p.get_current_token().compare(b) == 0)\
                                             {\
+                                                r.ln = p.get_current_line_number();\
+                                                r.tn = p.get_current_token_number();\
                                                 found = true;\
                                                 break;\
                                             }\
@@ -55,8 +58,9 @@ typedef struct arg
                                             {\
                                                 if (p.get_current_token().compare(a[i]) == 0)\
                                                 {\
+                                                    r.i = i;\
                                                     found = true;\
-                                                    std::cout<<a[i]<<std::endl;\
+                                                    /*std::cout<<a[i]<<std::endl;*/\
                                                 }\
                                             }\
                                         }\
