@@ -12,24 +12,14 @@ int main(int argc, char* argv[])
 {     
     ARG arg;     
     cc_tokenizer::csv_parser<cc_tokenizer::String<char>, char> parser(cc_tokenizer::String<char>(COMMAND));
+    
+    TRAVERSE_ARGV(argv, argc)
 
-    /*
-    while (parser.go_to_next_line() != cc_tokenizer::string_character_traits<char>::eof())
-    {
-        std::cout<<parser.get_current_line().c_str()<<std::endl;
-        while (parser.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())
-        {
-            std::cout<<parser.get_current_token().c_str()<<std::endl;
-        }
-    }
-     */
-
-    //TRAVERSE_ARGV(argv, argc)
-    FIND_ARG(argv, argc, parser, "d", arg)
-
+    FIND_ARG(argv, argc, parser, "v", arg)
     if (arg.i)
     {
         ARG* ptr = &arg;
+        FIND_ARG_BLOCK(argv, argc, parser, arg)
         while (ptr->next != NULL)
         {
             std::cout<<"--> "<<argv[ptr->i]<<std::endl;

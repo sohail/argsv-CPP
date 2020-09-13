@@ -20,8 +20,9 @@ typedef struct arg
 
 #define TRAVERSE_ARGV(a, n)  for (int i = 1; i < n; i++)\
                              {\
-                                 std::cout<<a[i]<<std::endl;\
+                                 std::cout<<a[i]<<" ";\
                              }\
+                             std::cout<<std::endl;\
 
 #define FIND_ARG(a, n, p, b, r)   {\
                                     cc_tokenizer::allocator<char> alloc_obj;\
@@ -69,5 +70,8 @@ typedef struct arg
                                         }\
                                     }\
                                 }\
+
+#define FIND_ARG_BLOCK(a, n, p, r)  {\
+                                    }\
 
 #endif
