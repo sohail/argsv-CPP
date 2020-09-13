@@ -18,60 +18,93 @@ typedef struct arg
     cc_tokenizer::string_character_traits<char>::int_type tn; // token number    
 }ARG;
 
-#define TRAVERSE_ARGV(a, n)  for (int i = 1; i < n; i++)\
-                             {\
-                                 std::cout<<a[i]<<" ";\
+#define TRAVERSE_ARGV(a, n)  {\
+                                 for (int i = 1; i < n; i++)\
+                                 {\
+                                     std::cout<<a[i]<<" ";\
+                                 }\
+                                 std::cout<<std::endl;\
                              }\
-                             std::cout<<std::endl;\
 
 #define FIND_ARG(a, n, p, b, r)   {\
-                                    cc_tokenizer::allocator<char> alloc_obj;\
-                                    bool found = false;\
-                                    ARG* ptr = &r;\
-                                    *ptr = {0, 0, NULL, NULL, 0, 0};\
-                                    p.reset(LINES);\
-                                    p.reset(TOKENS);\
-                                    while (p.go_to_next_line() != cc_tokenizer::string_character_traits<char>::eof())\
-                                    {\
-                                        while (p.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())\
-                                        {\
-                                            if (p.get_current_token().compare(b) == 0)\
-                                            {\
-                                                ptr->ln = p.get_current_line_number();\
-                                                ptr->tn = p.get_current_token_number();\
-                                                found = true;\
-                                                break;\
-                                            }\
-                                        }\
-                                        if (found)\
-                                        {\
-                                            break;\
-                                        }\
-                                    }\
-                                    if (!found)\
-                                    {\
-                                    }\
-                                    else\
-                                    {\
-                                        found = false;\
-                                        p.reset(TOKENS);\
-                                        while(p.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())\
-                                        {\
-                                            for (int i = 1; i < n; i++)\
-                                            {\
-                                                if (p.get_current_token().compare(a[i]) == 0)\
-                                                {\
-                                                    ptr->i = i;\
-                                                    ptr->next = (ARG*)alloc_obj.allocate(sizeof(ARG));\
-                                                    *(ptr->next) = {0, 0, ptr, NULL, 0, 0};\
-                                                    ptr = ptr->next;\
-                                                }\
-                                            }\
-                                        }\
-                                    }\
-                                }\
+                                      cc_tokenizer::allocator<char> alloc_obj;\
+                                      bool found = false;\
+                                      ARG* ptr = &r;\
+                                      *ptr = {0, 0, NULL, NULL, 0, 0};\
+                                      p.reset(LINES);\
+                                      p.reset(TOKENS);\
+                                      while (p.go_to_next_line() != cc_tokenizer::string_character_traits<char>::eof())\
+                                      {\
+                                          while (p.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())\
+                                          {\
+                                              if (p.get_current_token().compare(b) == 0)\
+                                              {\
+                                                  ptr->ln = p.get_current_line_number();\
+                                                  ptr->tn = p.get_current_token_number();\
+                                                  found = true;\
+                                                  break;\
+                                              }\
+                                          }\
+                                          if (found)\
+                                          {\
+                                              break;\
+                                          }\
+                                      }\
+                                      if (!found)\
+                                      {\
+                                      }\
+                                      else\
+                                      {\
+                                          found = false;\
+                                          p.reset(TOKENS);\
+                                          while(p.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())\
+                                          {\
+                                              for (int i = 1; i < n; i++)\
+                                              {\
+                                                  if (p.get_current_token().compare(a[i]) == 0)\
+                                                  {\
+                                                      ptr->i = i;\
+                                                      ptr->next = (ARG*)alloc_obj.allocate(sizeof(ARG));\
+                                                      *(ptr->next) = {0, 0, ptr, NULL, 0, 0};\
+                                                      ptr = ptr->next;\
+                                                  }\
+                                              }\
+                                          }\
+                                      }\
+                                  }\
 
 #define FIND_ARG_BLOCK(a, n, p, r)  {\
+                                        ARG* ptr = &r;\
+                                        while (ptr->i)\
+                                        {\
+                                            p.reset(LINES);\
+                                            p.reset(TOKENS);\
+                                            while (p.go_to_next_line() != cc_tokenizer::string_character_traits<char>::eof())\
+                                            {\
+                                                while (p.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())\
+                                                {\
+                                                    for (int i = ptr->i + 1; i < n; i++)\
+                                                    {\
+                                                        if (p.get_current_token().compare(a[i]) == 0)\
+                                                        {\
+                                                            if (!ptr->j)\
+                                                            {\
+                                                                ptr->j = i;\
+                                                            }\
+                                                            else if (i < ptr->j)\
+                                                            {\
+                                                                ptr->j = i;\
+                                                            }\
+                                                        }\
+                                                    }\
+                                                }\
+                                            }\
+                                            if (!ptr->j)\
+                                            {\
+                                                ptr->j = n - 1;\
+                                            }\
+                                            ptr = ptr->next;\
+                                        }\
                                     }\
 
 #endif

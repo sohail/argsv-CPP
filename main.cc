@@ -13,16 +13,16 @@ int main(int argc, char* argv[])
     ARG arg;     
     cc_tokenizer::csv_parser<cc_tokenizer::String<char>, char> parser(cc_tokenizer::String<char>(COMMAND));
     
-    TRAVERSE_ARGV(argv, argc)
+    /*TRAVERSE_ARGV(argv, argc)*/
 
-    FIND_ARG(argv, argc, parser, "v", arg)
+    FIND_ARG(argv, argc, parser, "dir", arg)
     if (arg.i)
     {
         ARG* ptr = &arg;
         FIND_ARG_BLOCK(argv, argc, parser, arg)
         while (ptr->next != NULL)
         {
-            std::cout<<"--> "<<argv[ptr->i]<<std::endl;
+            std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<std::endl;
             ptr = ptr->next;
         }
     }
