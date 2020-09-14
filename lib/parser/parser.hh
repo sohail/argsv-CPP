@@ -107,4 +107,37 @@ typedef struct arg
                                         }\
                                     }\
 
+#define SORT_ARG(r) {\
+                        ARG* ptr_outer = &r;\
+                        while (ptr_outer->next != NULL)\
+                        {\
+                            ARG* ptr_inner = &r;\
+                            while (ptr_inner->next != NULL)\
+                            {\
+                                if (ptr_inner->i > (ptr_inner->next)->i)\
+                                {\
+                                    ARG foo;\
+                                    foo.i = (ptr_inner->next)->i;\
+                                    foo.j = (ptr_inner->next)->j;\
+                                    foo.ln = (ptr_inner->next)->ln;\
+                                    foo.tn = (ptr_inner->next)->tn;\
+                                    \
+                                    \
+                                    (ptr_inner->next)->i = ptr_inner->i;\
+                                    (ptr_inner->next)->j = ptr_inner->j;\
+                                    (ptr_inner->next)->ln = ptr_inner->ln;\
+                                    (ptr_inner->next)->tn = ptr_inner->tn;\
+                                    \
+                                    \
+                                    ptr_inner->i = foo.i;\
+                                    ptr_inner->j = foo.j;\
+                                    ptr_inner->ln = foo.ln;\
+                                    ptr_inner->tn = foo.tn;\
+                                }\
+                                ptr_inner = ptr_inner->next;\
+                            }\
+                            ptr_outer = ptr_outer->next;\
+                        }\
+                    }\
+
 #endif
