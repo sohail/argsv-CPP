@@ -20,15 +20,16 @@ int main(int argc, char* argv[])
     FIND_ARG(argv, argc, parser, "dir", arg_d)
     /* TODO 
     /* Does not work here */
-    /* SORT_ARG(arg) */
+    //SORT_ARG(arg_d) 
     if (arg_d.i)
     {
+        //SORT_ARG(arg_d)
         ARG* ptr = &arg_d;
         FIND_ARG_BLOCK(argv, argc, parser, arg_d)
         /*SORT_ARG(arg_d)*/
         while (ptr->next != NULL)
         {
-            std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<std::endl;
+            std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<" [ln = "<<ptr->ln<<", tn = "<<ptr->tn<<"]"<<", argc = "<<ptr->j - ptr->i<<std::endl;
             ptr = ptr->next;
         }
     }
@@ -44,7 +45,8 @@ int main(int argc, char* argv[])
         /*SORT_ARG(arg_v)*/
         while (ptr->next != NULL)
         {
-            std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<std::endl;
+            //std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<std::endl;
+            std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<" [ln = "<<ptr->ln<<", tn = "<<ptr->tn<<"]"<<", argc = "<<ptr->j - ptr->i<<std::endl;
             ptr = ptr->next;
         }
     }
@@ -60,7 +62,8 @@ int main(int argc, char* argv[])
         /*SORT_ARG(arg_h)*/
         while (ptr->next != NULL)
         {
-            std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<std::endl;
+            //std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<std::endl;
+            std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<" [ln = "<<ptr->ln<<", tn = "<<ptr->tn<<"]"<<", argc = "<<ptr->j - ptr->i<<std::endl;
             ptr = ptr->next;
         }
     }

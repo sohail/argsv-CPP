@@ -35,12 +35,13 @@ typedef struct arg
                                       p.reset(TOKENS);\
                                       while (p.go_to_next_line() != cc_tokenizer::string_character_traits<char>::eof())\
                                       {\
+                                          /*std::cout<<p.get_current_line_number()<<" -> "<<p.get_current_line().c_str()<<std::endl;*/\
                                           while (p.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())\
                                           {\
                                               if (p.get_current_token().compare(b) == 0)\
                                               {\
                                                   ptr->ln = p.get_current_line_number();\
-                                                  ptr->tn = p.get_current_token_number();\
+                                                  /*ptr->tn = p.get_current_token_number();*/\
                                                   found = true;\
                                                   break;\
                                               }\
@@ -56,19 +57,22 @@ typedef struct arg
                                       else\
                                       {\
                                           found = false;\
-                                          p.reset(TOKENS);\
-                                          while(p.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())\
+                                          /*p.reset(TOKENS);*/\
+                                          for (int i = 1; i < n; i++)\
                                           {\
-                                              for (int i = 1; i < n; i++)\
-                                              {\
-                                                  if (p.get_current_token().compare(a[i]) == 0)\
-                                                  {\
-                                                      ptr->i = i;\
-                                                      ptr->next = (ARG*)alloc_obj.allocate(sizeof(ARG));\
-                                                      *(ptr->next) = {0, 0, ptr, NULL, 0, 0};\
-                                                      ptr = ptr->next;\
-                                                  }\
-                                              }\
+                                               p.reset(TOKENS);\
+                                               while (p.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())\
+                                               {\
+                                                   if (p.get_current_token().compare(a[i]) == 0)\
+                                                   {\
+                                                       ptr->i = i;\
+                                                       /*ptr->ln = p.get_current_line_number();*/\
+                                                       ptr->tn = p.get_current_token_number();\
+                                                       ptr->next = (ARG*)alloc_obj.allocate(sizeof(ARG));\
+                                                       *(ptr->next) = {0, 0, ptr, NULL, ptr->ln, 0};\
+                                                       ptr = ptr->next;\
+                                                   }\
+                                               }\
                                           }\
                                       }\
                                   }\
