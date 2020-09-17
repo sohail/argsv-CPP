@@ -8,10 +8,16 @@
 #ifndef		CC_TOKENIZER_ARGSV_CPP_PARSER_HH
 #define		CC_TOKENIZER_ARGSV_CPP_PARSER_HH
 
+/* 
+    Get ready for the code bloat or...
+    Eventually the rest of the file below this comment should be built into a compossite
+ */
+
 typedef struct arg
 {
     int i; // argv start index
-    int j; // argv end index    
+    int j; // argv end index  
+    int argc;
     struct arg* previous; // link to list
     struct arg* next; // link to list
     cc_tokenizer::string_character_traits<char>::int_type ln; // line number 
@@ -30,7 +36,7 @@ typedef struct arg
                                       cc_tokenizer::allocator<char> alloc_obj;\
                                       bool found = false;\
                                       ARG* ptr = &r;\
-                                      *ptr = {0, 0, NULL, NULL, 0, 0};\
+                                      *ptr = {0, 0, 0, NULL, NULL, 0, 0};\
                                       p.reset(LINES);\
                                       p.reset(TOKENS);\
                                       while (p.go_to_next_line() != cc_tokenizer::string_character_traits<char>::eof())\
@@ -69,7 +75,7 @@ typedef struct arg
                                                        /*ptr->ln = p.get_current_line_number();*/\
                                                        ptr->tn = p.get_current_token_number();\
                                                        ptr->next = (ARG*)alloc_obj.allocate(sizeof(ARG));\
-                                                       *(ptr->next) = {0, 0, ptr, NULL, ptr->ln, 0};\
+                                                       *(ptr->next) = {0, 0, 0, ptr, NULL, ptr->ln, 0};\
                                                        ptr = ptr->next;\
                                                    }\
                                                }\
@@ -94,10 +100,12 @@ typedef struct arg
                                                             if (!ptr->j)\
                                                             {\
                                                                 ptr->j = i;\
+                                                                ptr->argc = ptr->j - ptr->i - 1;\
                                                             }\
                                                             else if (i < ptr->j)\
                                                             {\
                                                                 ptr->j = i;\
+                                                                ptr->argc = ptr->j - ptr->i - 1;\
                                                             }\
                                                         }\
                                                     }\
@@ -106,11 +114,13 @@ typedef struct arg
                                             if (!ptr->j)\
                                             {\
                                                 ptr->j = n - 1;\
+                                                ptr->argc = ptr->j - ptr->i;\
                                             }\
                                             ptr = ptr->next;\
                                         }\
                                     }\
 
+/* Bubble sort */
 #define SORT_ARG(r) {\
                         ARG* ptr_outer = &r;\
                         while (ptr_outer->next != NULL)\
@@ -123,18 +133,21 @@ typedef struct arg
                                     ARG foo;\
                                     foo.i = (ptr_inner->next)->i;\
                                     foo.j = (ptr_inner->next)->j;\
+                                    foo.argc = (ptr_inner->next)->argc;\
                                     foo.ln = (ptr_inner->next)->ln;\
                                     foo.tn = (ptr_inner->next)->tn;\
                                     \
                                     \
                                     (ptr_inner->next)->i = ptr_inner->i;\
                                     (ptr_inner->next)->j = ptr_inner->j;\
+                                    (ptr_inner->next)->argc = ptr_inner->argc;\
                                     (ptr_inner->next)->ln = ptr_inner->ln;\
                                     (ptr_inner->next)->tn = ptr_inner->tn;\
                                     \
                                     \
                                     ptr_inner->i = foo.i;\
                                     ptr_inner->j = foo.j;\
+                                    ptr_inner->argc = foo.argc;\
                                     ptr_inner->ln = foo.ln;\
                                     ptr_inner->tn = foo.tn;\
                                 }\

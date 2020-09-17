@@ -19,51 +19,117 @@ int main(int argc, char* argv[])
 
     FIND_ARG(argv, argc, parser, "dir", arg_d)
     /* TODO 
-    /* Does not work here */
-    //SORT_ARG(arg_d) 
+       Haven't yet tested, do not use */
+    /*SORT_ARG(arg_d)*/ 
     if (arg_d.i)
     {
-        //SORT_ARG(arg_d)
+        /* TODO 
+           Haven't yet tested, do not use */    
+        /*SORT_ARG(arg_d)*/
         ARG* ptr = &arg_d;
         FIND_ARG_BLOCK(argv, argc, parser, arg_d)
+        /* TODO 
+           Haven't yet tested, do not use */
         /*SORT_ARG(arg_d)*/
         while (ptr->next != NULL)
         {
-            std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<" [ln = "<<ptr->ln<<", tn = "<<ptr->tn<<"]"<<", argc = "<<ptr->j - ptr->i<<std::endl;
-            ptr = ptr->next;
+            if (ptr->argc == (ptr->j - ptr->i))
+            {
+                std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<"(last command at CLI) [ln = "<<ptr->ln<<", tn = "<<ptr->tn<<"]"<<", argc = "<<ptr->argc<<", j - i = "<<ptr->j - ptr->i<<", arguments[";
+            }
+            else 
+            {
+                std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<" [ln = "<<ptr->ln<<", tn = "<<ptr->tn<<"]"<<", argc = "<<ptr->argc<<", j - i = "<<ptr->j - ptr->i<<", arguments[";
+            }
+            /*
+                Both of them would work as well
+                //for (int i = ptr->i + 1; i < ptr->argc + ptr->i + 1; i++)
+                //for (int i = ptr->i + 1; i < ptr->j; i++)
+             */
+            for (int i = 0; i < ptr->argc; i++)
+            {
+                /*
+                    //std::cout<<argv[i]<<", ";
+                 */
+                std::cout<<argv[ptr->i + i + 1]<<", ";
+            }
+            std::cout<<"]"<<std::endl;
+            ptr = ptr->next;            
         }
     }
 
-    FIND_ARG(argv, argc, parser, "v", arg_v)
+    FIND_ARG(argv, argc, parser, "v", arg_v)    
     /* TODO 
-    /* Does not work here */
-    /* SORT_ARG(arg) */
+       Haven't yet tested, do not use */
+    /*SORT_ARG(arg)*/
     if (arg_v.i)
     {
         ARG* ptr = &arg_v;
         FIND_ARG_BLOCK(argv, argc, parser, arg_v)
+        /* TODO 
+        /* Haven't yet tested, do not use */
         /*SORT_ARG(arg_v)*/
         while (ptr->next != NULL)
-        {
-            //std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<std::endl;
-            std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<" [ln = "<<ptr->ln<<", tn = "<<ptr->tn<<"]"<<", argc = "<<ptr->j - ptr->i<<std::endl;
+        {            
+            if (ptr->argc == (ptr->j - ptr->i))
+            {
+                std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<"(last command at CLI) [ln = "<<ptr->ln<<", tn = "<<ptr->tn<<"]"<<", argc = "<<ptr->argc<<", j - i = "<<ptr->j - ptr->i<<", arguments[";
+            }
+            else 
+            {
+                std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<" [ln = "<<ptr->ln<<", tn = "<<ptr->tn<<"]"<<", argc = "<<ptr->argc<<", j - i = "<<ptr->j - ptr->i<<", arguments[";
+            }
+            /*
+                Both of them would work as well
+                //for (int i = ptr->i + 1; i < ptr->argc + ptr->i + 1; i++)
+                //for (int i = ptr->i + 1; i < ptr->j; i++)
+             */   
+            for (int i = 0; i < ptr->argc; i++)
+            {
+                /*       
+                    //std::cout<<argv[i]<<", ";
+                 */                    
+                std::cout<<argv[ptr->i + i + 1]<<", ";
+            }            
+            std::cout<<"]"<<std::endl;
             ptr = ptr->next;
         }
     }
 
-    FIND_ARG(argv, argc, parser, "?", arg_h)
+    FIND_ARG(argv, argc, parser, "?", arg_h)    
     /* TODO 
-    /* Does not work here */
-    /* SORT_ARG(arg_h) */
+       Haven't yet tested, do not use */
+    /*SORT_ARG(arg_h)*/
     if (arg_h.i)
     {
         ARG* ptr = &arg_h;
         FIND_ARG_BLOCK(argv, argc, parser, arg_h)
+        /* TODO 
+           Haven't yet tested, do not use */
         /*SORT_ARG(arg_h)*/
         while (ptr->next != NULL)
         {
-            //std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<std::endl;
-            std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<" [ln = "<<ptr->ln<<", tn = "<<ptr->tn<<"]"<<", argc = "<<ptr->j - ptr->i<<std::endl;
+            if (ptr->argc == (ptr->j - ptr->i))
+            {
+                std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<"(last command at CLI) [ln = "<<ptr->ln<<", tn = "<<ptr->tn<<"]"<<", argc = "<<ptr->argc<<", j - i = "<<ptr->j - ptr->i<<", arguments[";
+            }
+            else 
+            {
+                std::cout<<"* "<<argv[ptr->i]<<" --> "<<argv[ptr->j]<<" [ln = "<<ptr->ln<<", tn = "<<ptr->tn<<"]"<<", argc = "<<ptr->argc<<", j - i = "<<ptr->j - ptr->i<<", arguments[";
+            }
+            /*
+                Both of them would work as well
+                //for (int i = ptr->i + 1; i < ptr->argc + ptr->i + 1; i++)
+                //for (int i = ptr->i + 1; i < ptr->j; i++)
+             */
+            for (int i = 0; i < ptr->argc; i++)
+            {
+                /*
+                    //std::cout<<argv[i]<<", ";
+                 */
+                std::cout<<argv[ptr->i + i + 1]<<", ";
+            }   
+            std::cout<<"]"<<std::endl;
             ptr = ptr->next;
         }
     }
