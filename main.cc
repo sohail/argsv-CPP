@@ -4,9 +4,14 @@
  */
 
 #include <iostream>
-#include "lib/parser/parser.hh"
-
+/*
+    To change the default parsing behaviour of the CSV parser
+    //#define GRAMMAR_END_OF_TOKEN_MARKER     ","
+    //#define GRAMMAR_END_OF_TOKEN_MARKER_SIZE    1
+ */
 #define COMMAND "d,-d,dir,--dir,(displays a list of files and subdirectories in a directory)\nh,-h,help,--help,?,/?,(displays help screen)\nv,-v,version,--version,(displays version number)"
+
+#include "lib/parser/parser.hh"
 
 int main(int argc, char* argv[])
 {     
