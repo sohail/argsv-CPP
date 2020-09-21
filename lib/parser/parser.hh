@@ -10,19 +10,19 @@
 
 /* 
     Get ready for the code bloat or...
-    Eventually the rest of the file below this comment should be built into a compossite
+    Eventually the rest of the file below this comment should be built/made into a compossite
  */
 
 typedef struct arg
 {
-    int i; // argv start index
-    int j; // argv end index  
-    int argc;
+    cc_tokenizer::string_character_traits<char>::size_type i; // argv start index
+    cc_tokenizer::string_character_traits<char>::size_type j; // argv end index  
+    int argc; // as the name suggests, argument count for this one specific command alone
     struct arg* previous; // link to list
     struct arg* next; // link to list
     cc_tokenizer::string_character_traits<char>::int_type ln; // line number 
     cc_tokenizer::string_character_traits<char>::int_type tn; // token number    
-}ARG;
+} ARG;
 
 #define TRAVERSE_ARGV(a, n)  {\
                                  for (int i = 1; i < n; i++)\
@@ -120,6 +120,43 @@ typedef struct arg
                                         }\
                                     }\
 
+/* 
+   p is for an instance of parser 
+   t is for token, which can be any thing it can be all in any caps as well
+ */
+#define HELP_STR_START    "("
+#define HELP_STR_END      ")"
+#define ALL               "ALL"
+#define HELP(p, r, t)     {\
+                                ARG* ptr = &r;\
+                                *ptr = {0, 0, 0, NULL, NULL, 0, 0};\
+                                cc_tokenizer::String<char> str = cc_tokenizer::String<char>(t);\
+                                str.toUpper();\
+                                p.reset(LINES);\
+                                p.reset(TOKENS);\
+                                if (str.compare(ALL) == 0)\
+                                {\
+                                    while (p.go_to_next_line() != cc_tokenizer::string_character_traits<char>::eof())\
+                                    {\
+                                        while (p.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())\
+                                        {\
+                                            if (p.get_current_token().find(HELP_STR_START) == 0)\
+                                            {\
+                                                cc_tokenizer::string_character_traits<char>::size_type pos = p.get_current_token().find(HELP_STR_END);\
+                                                if (pos != cc_tokenizer::String<char>::npos && pos == (p.get_current_token().size() - cc_tokenizer::String<char>(HELP_STR_END).size()))\
+                                                {\
+                                                    std::cout<<p.get_current_token().c_str()<<std::endl;\
+                                                }\
+                                            }\
+                                        }\
+                                    }\
+                                }\
+                                else\
+                                {\
+                                    /* code */\
+                                }\
+                          }\
+                                        
 /* Bubble sort */
 #define SORT_ARG(r) {\
                         ARG* ptr_outer = &r;\

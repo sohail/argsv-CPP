@@ -17,7 +17,8 @@ int main(int argc, char* argv[])
 {     
     ARG arg_d;
     ARG arg_v;
-    ARG arg_h;     
+    ARG arg_h;
+    ARG help_str;     
     cc_tokenizer::csv_parser<cc_tokenizer::String<char>, char> parser(cc_tokenizer::String<char>(COMMAND));
     
     /*TRAVERSE_ARGV(argv, argc)*/
@@ -138,6 +139,8 @@ int main(int argc, char* argv[])
             ptr = ptr->next;
         }
     }
+
+    //HELP(parser, help_str, ALL)
                  
     return 0;
 }
