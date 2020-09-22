@@ -140,7 +140,29 @@ int main(int argc, char* argv[])
         }
     }
 
-    //HELP(parser, help_str, ALL)
+    HELP(parser, help_str, ALL)
+ /*   
+    ARG* ptr = &help_str;
+    while (1)
+    {
+        parser.reset(LINES);
+        parser.reset(TOKENS);
+        std::cout<<"ptr->ln = "<<ptr->ln<<std::endl;
+        std::cout<<"ptr->tn = "<<ptr->tn<<std::endl;
+
+        parser.get_line_by_number(ptr->ln);
+        std::cout<<parser.get_token_by_number(ptr->tn).c_str()<<std::endl;
+
+        if (ptr->next != NULL)
+        {
+            ptr = ptr->next;
+        }
+        else
+        {
+            break;
+        }
+    }
+*/    
                  
     return 0;
 }

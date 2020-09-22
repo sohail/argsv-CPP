@@ -131,6 +131,7 @@ typedef struct arg
                                 ARG* ptr = &r;\
                                 *ptr = {0, 0, 0, NULL, NULL, 0, 0};\
                                 cc_tokenizer::String<char> str = cc_tokenizer::String<char>(t);\
+                                cc_tokenizer::allocator<char> alloc_obj;\
                                 str.toUpper();\
                                 p.reset(LINES);\
                                 p.reset(TOKENS);\
@@ -145,7 +146,16 @@ typedef struct arg
                                                 cc_tokenizer::string_character_traits<char>::size_type pos = p.get_current_token().find(HELP_STR_END);\
                                                 if (pos != cc_tokenizer::String<char>::npos && pos == (p.get_current_token().size() - cc_tokenizer::String<char>(HELP_STR_END).size()))\
                                                 {\
-                                                    std::cout<<p.get_current_token().c_str()<<std::endl;\
+                                                    if (ptr->ln && ptr->tn)\
+                                                    {\
+                                                        ptr->next = (ARG*)alloc_obj.allocate(sizeof(ARG));\
+                                                        *(ptr->next) = {0, 0, 0, ptr, NULL, 0, 0};\
+                                                        ptr = ptr->next;\
+                                                    }\
+                                                    ptr->i = cc_tokenizer::String<char>(HELP_STR_START).size();\
+                                                    ptr->j = pos;\
+                                                    ptr->ln = p.get_current_line_number();\
+                                                    ptr->tn = p.get_current_token_number();\
                                                 }\
                                             }\
                                         }\
