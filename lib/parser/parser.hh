@@ -121,7 +121,8 @@ typedef struct arg
                                     }\
 
 /* 
-   p is for an instance of parser 
+   p is for an instance of parser
+   r is where the found values will be returned or stored... it has to be an instance of type ARG 
    t is for token, which can be any thing it can be all in any caps as well
  */
 #define HELP_STR_START    "("

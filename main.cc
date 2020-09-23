@@ -141,17 +141,24 @@ int main(int argc, char* argv[])
     }
 
     HELP(parser, help_str, ALL)
- /*   
     ARG* ptr = &help_str;
     while (1)
     {
         parser.reset(LINES);
         parser.reset(TOKENS);
-        std::cout<<"ptr->ln = "<<ptr->ln<<std::endl;
-        std::cout<<"ptr->tn = "<<ptr->tn<<std::endl;
-
-        parser.get_line_by_number(ptr->ln);
-        std::cout<<parser.get_token_by_number(ptr->tn).c_str()<<std::endl;
+                
+        std::cout<<"--> (Line# "<<parser.get_current_line_number()<<") --> "<<parser.get_line_by_number(ptr->ln).c_str()<<std::endl;                
+        while (parser.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())
+        {
+            if (parser.get_current_token_number() != ptr->tn)
+            {
+                std::cout<<"   -> (token# "<<parser.get_current_token_number()<<") -> "<<parser.get_current_token().c_str()<<std::endl;
+            }
+            else
+            {
+                std::cout<<"   -> (help string) "<<parser.get_token_by_number(ptr->tn).substr(ptr->i, ptr->j - ptr->i).c_str()<<std::endl;     
+            }            
+        }
 
         if (ptr->next != NULL)
         {
@@ -162,7 +169,6 @@ int main(int argc, char* argv[])
             break;
         }
     }
-*/    
                  
     return 0;
 }
