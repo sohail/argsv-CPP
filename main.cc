@@ -146,8 +146,16 @@ int main(int argc, char* argv[])
     {
         parser.reset(LINES);
         parser.reset(TOKENS);
-                
-        std::cout<<"--> (Line# "<<parser.get_current_line_number()<<") --> "<<parser.get_line_by_number(ptr->ln).c_str()<<std::endl;                
+        
+        /* 
+            The parser.get_cuttent_line_number() should return 0 instead it is returning the actual line number of the line returned by the parser.get_line_number(ptr->lin) 
+            It is due to the obvious reason that parser.get_line_by_number() is getting called before the parser.get_current_line_number()
+
+            std::cout<<"--> (Line# "<<parser.get_current_line_number()<<") --> "<<parser.get_line_by_number(ptr->ln).c_str()<<std::endl;
+
+            Now, the above line is commented and replaced by the following line
+         */
+        std::cout<<"--> (Line# "<<ptr->ln<<") --> "<<parser.get_line_by_number(ptr->ln).c_str()<<std::endl;                      
         while (parser.go_to_next_token() != cc_tokenizer::string_character_traits<char>::eof())
         {
             if (parser.get_current_token_number() != ptr->tn)
