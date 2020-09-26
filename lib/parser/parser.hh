@@ -165,6 +165,23 @@ typedef struct arg
                                 else\
                                 {\
                                     /* code */\
+                                    for (cc_tokenizer::string_character_traits<char>::int_type i = 1; i <= p.get_total_number_of_lines(); i++)\
+                                    {\
+                                        p.get_line_by_number(i);\
+                                        for (cc_tokenizer::string_character_traits<char>::int_type j = 1; j <= p.get_total_number_of_tokens(); j++)\
+                                        {\
+                                            if (p.get_token_by_number(j).compare(t) == 0)\
+                                            {\
+                                                *ptr = {0, 0, 0, NULL, NULL, i, 0};\
+                                                break;\
+                                            }\
+                                        }\
+                                        if (ptr->ln)\
+                                        {\
+                                            std::cout<<"Found it..."<<std::endl;\
+                                            break;\
+                                        }\
+                                    }\
                                 }\
                           }\
                                         

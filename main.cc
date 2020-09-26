@@ -177,6 +177,8 @@ int main(int argc, char* argv[])
             break;
         }
     }
+
+    HELP(parser, help_str, "h")
                  
     return 0;
 }
