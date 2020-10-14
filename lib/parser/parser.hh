@@ -155,6 +155,7 @@ typedef struct arg
                                                     }\
                                                     ptr->i = cc_tokenizer::String<char>(HELP_STR_START).size();\
                                                     ptr->j = pos;\
+                                                    ptr->argc = ptr->j - ptr->i;\
                                                     ptr->ln = p.get_current_line_number();\
                                                     ptr->tn = p.get_current_token_number();\
                                                 }\
@@ -172,13 +173,23 @@ typedef struct arg
                                         {\
                                             if (p.get_token_by_number(j).compare(t) == 0)\
                                             {\
-                                                *ptr = {0, 0, 0, NULL, NULL, i, 0};\
+                                                *ptr = {0, 0, 0, NULL, NULL, i, j};\
                                                 break;\
                                             }\
                                         }\
-                                        if (ptr->ln)\
+                                        if (ptr->ln && ptr->tn)\
                                         {\
-                                            std::cout<<"Found it..."<<std::endl;\
+                                            cc_tokenizer::string_character_traits<char>::size_type pos = p.get_current_line().find(HELP_STR_START);\
+                                            if (pos != cc_tokenizer::String<char>::npos)\
+                                            {\
+                                                ptr->i = pos + 1;\
+                                                pos = p.get_current_line().find(HELP_STR_END);\
+                                                if (pos != cc_tokenizer::String<char>::npos)\
+                                                {\
+                                                    ptr->j = pos;\
+                                                    ptr->argc = ptr->j - ptr->i;\
+                                                }\
+                                            }\
                                             break;\
                                         }\
                                     }\

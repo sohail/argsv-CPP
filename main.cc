@@ -179,6 +179,11 @@ int main(int argc, char* argv[])
     }
 
     HELP(parser, help_str, "h")
+    if (help_str.ln)
+    {
+        std::cout<<std::endl<<parser.get_line_by_number(help_str.ln).c_str()<<std::endl;
+        std::cout<<parser.get_line_by_number(help_str.ln).substr(help_str.i, help_str.argc).c_str()<<std::endl;
+    }
                  
     return 0;
 }
