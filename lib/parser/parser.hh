@@ -10,7 +10,7 @@
 
 /* 
     Get ready for the code bloat or...
-    Eventually the rest of the file below this comment should be built/made into a compossite
+    Eventually the rest of the file below this comment should be built/made into a composite
  */
 
 typedef struct arg
